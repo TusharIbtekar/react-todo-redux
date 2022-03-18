@@ -1,26 +1,67 @@
-import React from 'react'
-import { Checkbox } from '@material-ui/core'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { useDispatch } from 'react-redux'
-import { setCheck } from '../features/todos/todoSlice'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Checkbox } from '@mui/material'
 
-const TodoItem = ({ name, done, id }) => {
+import { fetchTodoList, setCheck } from '../features/todos/todoSlice'
+
+const TodoItem = () => {
   const dispatch = useDispatch()
+  const todoList = useSelector(fetchTodoList)
 
-  const handleCheck = () => {
+  const handleCheck = (id) => {
     dispatch(setCheck(id))
   }
 
   return (
-    <div className='d-flex flex-row align-items-center w-100' style={{ paddingLeft: '21%' }}>
-      <Checkbox
-        checked={done}
-        color='primary'
-        onChange={handleCheck}
-        inputProps={{ 'aria-label': 'controlled' }}
-      />
-      <p className='my-0'>{name}</p>
-    </div>
+    <div className='w-100 mt-2'>
+      <div className=''>
+        {
+          todoList.map(item => (
+            !(item.done) ?
+              <div className='d-flex flex-row align-items-center justify-content-start'>
+                <Checkbox
+                  checked={item.done}
+                  color='primary'
+                  onChange={() => handleCheck(item.id)}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+                <p className='my-0'>{item.item}</p>
+              </div> : null
+          ))
+        }
+      </div>
+      <br />
+
+      <div className='d-flex justify-content-center'>
+        <Accordion className='w-100'>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Done</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              {
+                todoList.map(item => (
+                  item.done ?
+                    <div className="d-flex flex-row align-items-center">
+                      <Checkbox
+                        checked={item.done}
+                        color='primary'
+                        onChange={() => handleCheck(item.id)}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                      />
+                      <p className='my-0' style={{ textDecoration: 'line-through' }}>{item.item}</p>
+                    </div> : null
+                ))
+              }
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </div>
+
+
+    </div >
   )
 }
 
