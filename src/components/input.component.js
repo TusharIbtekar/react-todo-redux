@@ -18,8 +18,10 @@ const Input = () => {
 
   return (
     <>
-      <input type='text' onChange={e => setInput(e.target.value)} />
-      <button onClick={addTodo}>ADD</button>
+      <div className='d-flex flex-row justify-content-center w-100'>
+        <input className='me-4 w-50' type='text' onChange={e => setInput(e.target.value)} />
+        <button className='btn btn-outline-success' onClick={addTodo}>ADD</button>
+      </div>
     </>
   )
 }
