@@ -18,9 +18,9 @@ const TodoItem = () => {
     <div className='w-100 mt-2'>
       <div className=''>
         {
-          todoList.map(item => (
+          todoList.map((item, index) => (
             !(item.done) ?
-              <div className='d-flex flex-row align-items-center justify-content-start'>
+              <div key={index} className='d-flex flex-row align-items-center justify-content-start'>
                 <Checkbox
                   checked={item.done}
                   color='primary'
@@ -34,17 +34,19 @@ const TodoItem = () => {
       </div>
       <br />
 
+
       <div className='d-flex justify-content-center'>
         <Accordion className='w-100'>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>Done</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
+            <Typography component={'span'}>
               {
-                todoList.map(item => (
+                todoList.map((item, index) => (
                   item.done ?
-                    <div className="d-flex flex-row align-items-center">
+                    <div key={index} className="d-flex flex-row align-items-center">
+                      {console.log(todoList)}
                       <Checkbox
                         checked={item.done}
                         color='primary'

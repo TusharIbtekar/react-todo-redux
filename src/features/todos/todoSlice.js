@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  todoList: []
+  todoList: [],
+  // showDone: Boolean
 }
 
 const todoSlice = createSlice({
@@ -17,7 +18,14 @@ const todoSlice = createSlice({
           item.done = item.done ? false : true
         }
       })
-    }
+    },
+    // setShowDone: (state, action) => {
+    //   state.todoList.map(item => {
+    //     if (item.done === true) {
+    //       state.showDone = true;
+    //     }
+    //   })
+    // },
   }
 });
 
